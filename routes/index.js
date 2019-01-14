@@ -8,8 +8,7 @@ const   express     = require("express"),
 
 
 router.get("/signup",function(req,res){
-    console.log(__dirname);
-	res.sendFile("./views/registration.html" , {root: __dirname + "/.." });
+    res.sendFile("./views/registration.html" , {root: __dirname + "/.." });
 });
 
 router.get("/login",function(req,res){
