@@ -44,6 +44,10 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(GoogleStrategy);
 
 
+app.get("/" , function(req,res){
+    res.send("all details saved");  
+});
+
 app.get("/sample", Middleware.isLoggedIn,function(req,res){
   res.send("ok all set");
 });
@@ -68,6 +72,7 @@ app.get( '/auth/google/callback',
         successRedirect: '/sample',
         failureRedirect: '/signup'
 }));
+
 
 
 //redirecting the routes

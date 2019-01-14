@@ -13,7 +13,7 @@ middlewareObj.isLogged =function isLogged(req,res,next){
        return next();
     } 
 
-    res.redirect("/user");
+    res.redirect("/sample");
 }
 
 module.exports = middlewareObj;

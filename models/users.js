@@ -10,6 +10,10 @@ var userSchema = new mongoose.Schema({
     email:{
         type:String,
         unique:true
+    },
+    userDetails : {
+    	type: mongoose.Schema.Types.ObjectId,
+    	ref : "UserDetails"
     }
 });
 
