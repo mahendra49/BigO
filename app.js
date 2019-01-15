@@ -8,8 +8,8 @@ const express    = require("express"),
       mongoose 				= require("mongoose"), 
       Index = require("./routes/index"),
       GoogleStrategy = require('./routes/googleAuth'),
-      Middleware  = require("./middleware/index");
-
+      Middleware  = require("./middleware/index"),
+      UserInfo    = require("./routes/userinfo");
 
 mongoose.connect("mongodb://localhost/BigO",{useNewUrlParser:true});
 
@@ -69,15 +69,15 @@ app.get('/auth/google',
 //   which, in this example, will redirect the user to the home page.
 app.get( '/auth/google/callback', 
     passport.authenticate( 'google', { 
-        successRedirect: '/updaterentals',
+        successRedirect: '/user/updaterentals',
         failureRedirect: '/signup'
 }));
 
 
 
 //redirecting the routes
-app.use("/",Index);
-
+app.use("/", Index);
+app.use("/user", UserInfo);
 
 app.listen(3000,function(){
 	console.log("server running " + this.address().port);
