@@ -21,24 +21,30 @@ router.get("/getDetails", Middleware.isLoggedIn, function(req,res){
 });
 
 router.post("/getDetails", Middleware.isLoggedIn , function(req,res){
-    console.log("here");
-    console.log(req.body.person);
-    console.log(req.user);
-    UserDetails.findOne({email:req.user.email} , function(err , userdetails){
+    
+    let ModfiedDetails = req.body.person;
+    ModfiedDetails.email = req.user.email;
+    UserDetails.findOneAndUpdate({email:req.user.email} ,ModfiedDetails ,function(err , userdetails){
         if(err){
             res.redirect("/login");
         }
+        console.log(userdetails);
         if(!userdetails){
-            UserDetails.insert(req.body.person , function(err,userdetails){
+            let ModfiedDetails = req.body.person;
+            ModfiedDetails.email = req.user.email;
+            UserDetails.create(ModfiedDetails, function(err,userdetails){
                 if(err){
-                    res.redirect("/sammple");
+                    console.log(err);
+                    res.redirect("/sample");
                 }
                 else{
+                    console.log("creating new userdetails");
                     User.findOne({email:req.user.email},function(err,user){
                         if(err){
                             res.redirect("/sample");
                         }else{
                             user.userDetails = userdetails;
+                            user.save();
                             res.redirect("/");
                         }
                     });
@@ -47,27 +53,9 @@ router.post("/getDetails", Middleware.isLoggedIn , function(req,res){
 
         }
         else{
-            userdetails = req.body.person;
-            userdetails.save(function(err , userdetails ){
-                if(err){
-                    console.log("err in getDetails/post---userdetails.save");
-                    res.redirect("/sammple");
-                }
-            });
-            User.findOne({email:req.user.email} , function(err,user){
-                user.userDetails = userdetails
-                user.save(function(err,user){
-                    if(err){
-                        console.log("user.find in getDetails");
-                        res.redirect("/sample");
-                    }
-                    else{
-                        res.redirect("/");
-                    }
-                });
-
-            });
+            res.redirect("/");
         }
+        
     }); 
 });
 
