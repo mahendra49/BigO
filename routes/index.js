@@ -100,17 +100,34 @@ router.get("/logout",function(req,res){
 });
 
 
+//show the list of options and let user update
 router.get("/updaterentals", Middleware.isLoggedIn, function(req,res){
     UserDetails.findOne({email:req.user.email} , function(err,userdetails){
         res.render("select-rentals",{equips:userdetails.equipments});
     });
 });
 
+//update the list of items available
 router.post("/updaterentals", Middleware.isLoggedIn , function(req,res){
-    console.log(req.body)
+    const avaiList = Object.keys(req.body);
+    UserDetails.findOne({email:req.user.email} , function(err,userdetails){
+        userdetails.equipments.forEach(function(item){
+            item.state = 0;
+        });
+        userdetails.equipments.forEach(function(item){
+            if(avaiList.includes(item.name)){
+                item.state = 1;
+            }
+        });
+        userdetails.save(function(err){
+            if(err){
+                res.redirect("/");
+            }
+            else{
+                res.send("wait");        
+            }
+        });
+    });
 });
-
-
-
 
 module.exports = router; 

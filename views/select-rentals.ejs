@@ -9,8 +9,13 @@
 		<%equips.forEach(function(equip){%>
 			<!-- Rounded switch -->
 			<label class="switch">
-			  <h2><%=equip%></h2> <br> 
-			  <input name="<%=equip%>" type="checkbox">
+			  <h2><%=equip.name%></h2> <br> 
+			  <!-- The trick -->
+			  <%if(equip.state == 0){%>
+			  	<input name="<%=equip.name%>" type="checkbox">
+			  <%}else{%>
+			  	<input name="<%=equip.name%>" type="checkbox" checked>
+			  <%}%>
 			  <span class="slider round"></span>
 			</label>
 			<br>
