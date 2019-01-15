@@ -10,7 +10,8 @@ var userDetails = new mongoose.Schema({
 	number		: String,
 	city		: String,
 	equipments  : [{
-		type:String
+		name:String,
+		state:{type:Number,default: 0}
 	}]
 
 });

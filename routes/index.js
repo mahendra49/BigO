@@ -21,14 +21,18 @@ router.get("/getDetails", Middleware.isLoggedIn, function(req,res){
 });
 
 router.post("/getDetails", Middleware.isLoggedIn , function(req,res){
-    
-    let ModfiedDetails = req.body.person;
-    ModfiedDetails.email = req.user.email;
+    var ModfiedDetails = req.body;
+    var itelist = new Array();
+    Object.keys(ModfiedDetails.equipments).forEach(function(key) {
+        itelist.push({name:ModfiedDetails.equipments[key]});
+    });
+    ModfiedDetails.equipments = itelist;
+    console.log(ModfiedDetails);
     UserDetails.findOneAndUpdate({email:req.user.email} ,ModfiedDetails ,function(err , userdetails){
         if(err){
             res.redirect("/login");
         }
-        console.log(userdetails);
+        //console.log(userdetails);
         if(!userdetails){
             let ModfiedDetails = req.body.person;
             ModfiedDetails.email = req.user.email;
@@ -84,7 +88,7 @@ router.post("/signup", Middleware.isLogged, function(req,res){
 
 //auth and login in 
 router.post("/login",passport.authenticate("local",{
-        successRedirect:"/",
+        successRedirect:"/getDetails",
         failureRedirect:"/login"
     }),function(req,res){
 });
@@ -94,5 +98,19 @@ router.get("/logout",function(req,res){
     req.logout();
     res.redirect("/login");
 });
+
+
+router.get("/updaterentals", Middleware.isLoggedIn, function(req,res){
+    UserDetails.findOne({email:req.user.email} , function(err,userdetails){
+        res.render("select-rentals",{equips:userdetails.equipments});
+    });
+});
+
+router.post("/updaterentals", Middleware.isLoggedIn , function(req,res){
+    console.log(req.body)
+});
+
+
+
 
 module.exports = router; 

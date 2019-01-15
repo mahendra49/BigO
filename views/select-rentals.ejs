@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select you rentals</title>
+	<link rel="stylesheet" type="text/css" href="../on-off-css/on-off.css">
+</head>
+<body>
+	<form method="POST" action="/updaterentals">
+		<%equips.forEach(function(equip){%>
+			<!-- Rounded switch -->
+			<label class="switch">
+			  <h2><%=equip%></h2> <br> 
+			  <input name="<%=equip%>" type="checkbox">
+			  <span class="slider round"></span>
+			</label>
+			<br>
+		<% }) %>
+		<input type="submit" value="submit">
+	</form>
+	</body>
+</html>
+	

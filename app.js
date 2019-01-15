@@ -18,7 +18,7 @@ mongoose.connect("mongodb://localhost/BigO",{useNewUrlParser:true});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(bodyparser.json());
-
+app.set("view engine","ejs");
 
 //sessions
 app.use(require("express-session")({
@@ -69,7 +69,7 @@ app.get('/auth/google',
 //   which, in this example, will redirect the user to the home page.
 app.get( '/auth/google/callback', 
     passport.authenticate( 'google', { 
-        successRedirect: '/sample',
+        successRedirect: '/updaterentals',
         failureRedirect: '/signup'
 }));
 
