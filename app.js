@@ -9,7 +9,8 @@ const express    = require("express"),
       Index = require("./routes/index"),
       GoogleStrategy = require('./routes/googleAuth'),
       Middleware  = require("./middleware/index"),
-      UserInfo    = require("./routes/userinfo");
+      UserInfo    = require("./routes/userinfo"),
+      RentalService = require("./routes/rental-service");
 
 mongoose.connect("mongodb://localhost/BigO",{useNewUrlParser:true});
 
@@ -78,6 +79,7 @@ app.get( '/auth/google/callback',
 //redirecting the routes
 app.use("/", Index);
 app.use("/user", UserInfo);
+app.use("/find", RentalService);
 
 app.listen(3000,function(){
 	console.log("server running " + this.address().port);

@@ -1,8 +1,8 @@
 const express       = require("express"),
       router        = express.Router(),
       UserDetails   = require("../models/userDetails"),
-      User                = require("../models/users"),
-      Middleware          = require("../middleware/index");
+      User          = require("../models/users"),
+      Middleware    = require("../middleware/index");
 
 
 //show the list of options and let user update
@@ -47,7 +47,7 @@ router.post("/getDetails", Middleware.isLoggedIn , function(req,res){
         itelist.push({name:ModfiedDetails.equipments[key]});
     });
     ModfiedDetails.equipments = itelist;
-    console.log(ModfiedDetails);
+    //console.log(ModfiedDetails);
     UserDetails.findOneAndUpdate({email:req.user.email} ,ModfiedDetails ,function(err , userdetails){
         if(err){
             res.redirect("/login");
